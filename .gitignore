@@ -1,0 +1,43 @@
+# Compiled source #
+###################
+*.a
+*.d
+*.dll
+*.lib
+*.o
+*.obj
+*.so
+
+# Code::Blocks temp files #
+###########################
+*.depend
+*.layout
+
+# Visual Studio temp files #
+############################
+*.db
+*.db-shm
+*.db-wal
+*.idb
+*.ilk
+*.iobj
+*.ipch
+*.ipdb
+*.lastbuildstate
+*.opendb
+*.pdb
+*.res
+*.suo
+*.tlog
+*.user
+
+# doxygen generated files #
+###########################
+*.aux
+*.css
+*.dvi
+*.html
+*.js
+*.log
+*.png
+*.tex
