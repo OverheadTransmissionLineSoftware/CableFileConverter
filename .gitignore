@@ -41,3 +41,9 @@
 *.log
 *.png
 *.tex
+
+# OTLS-CableFileConverter generated executables #
+#################################################
+*.exe
+build/codeblocks/debug/CableFileConverter
+build/codeblocks/release/CableFileConverter
