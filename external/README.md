@@ -41,13 +41,6 @@ Configure the library build.
 ../configure --disable-shared --enable-debug_gdb --enable-std_string_conv_in_wxstring
 ```
 
-Modify the build configuration to use wxStreams, not std::streams. This is
-required so the application can load the xml based documents.
-```
-nano lib/wx/include/<unique>/wx/setup.h
-     #define wxUSE_STD_IOSTREAM 0
-```
-
 Build the libraries.
 ```
 make
@@ -64,13 +57,6 @@ cd build-release
 Configure the release library build.
 ```
 ../configure --disable-shared --disable-debug --enable-std_string_conv_in_wxstring
-```
-
-Modify the build configuration to use wxStreams, not std::streams. This is
-required so the application can load the xml based documents.
-```
-nano lib/wx/include/<unique>/wx/setup.h
-     #define wxUSE_STD_IOSTREAM 0
 ```
 
 Build the libraries.
