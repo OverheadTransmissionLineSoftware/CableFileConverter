@@ -18,11 +18,16 @@ releasing unauthorized parsers.
 This repository is meant to be bundled with a custom parser. Here's how it's
 done:
 
-Duplicate into a private repository.
+Create an empty private repository.
+```
+https://help.github.com/articles/creating-a-new-repository/
+```
+
+Duplicate into the new repository.
 ```
 git clone --bare https://github.com/OverheadTransmissionLineSoftware/CableFileConverter.git
 cd CableFileConverter.git
-git push --mirror https://github.com/<user>/<new-repository>.git
+git push --mirror <new-repository-url>
 cd ..
 rm -rf CableFileConverter.git
 ```
