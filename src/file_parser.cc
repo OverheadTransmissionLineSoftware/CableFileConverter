@@ -5,7 +5,7 @@
 
 wxString FileParser::Extract(const wxString& str, const wxString& boundary) {
   // finds start position
-  int pos_start = str.find(boundary);
+  int pos_start = str.find(boundary) + 1;
   if (pos_start == -1) {
     return wxString();
   }
@@ -44,7 +44,7 @@ bool FileParser::Separate(const wxString& str, const wxString& separator,
   // creates left and right strings
   const int kSize = str.size();
   str_left = str.substr(0, pos);
-  str_right = str.substr(pos, kSize);
+  str_right = str.substr(pos + 1, kSize);
 
   return true;
 }
