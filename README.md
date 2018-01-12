@@ -61,6 +61,11 @@ Windows Usage:
 CableFileConveter.exe --help
 ```
 
+Check the logs for the conversion status.
+```
+<executable_dir>/CableFileConverter.log
+```
+
 ## Branches
 The master branch contains stable code most of the time, but it's best to use
 specific [releases](https://github.com/OverheadTransmissionLineSoftware/CableFileConverter/releases)
