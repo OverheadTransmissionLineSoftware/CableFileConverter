@@ -45,18 +45,19 @@ bool CableFileConverterApp::OnCmdLineParsed(wxCmdLineParser& parser) {
   }
 
   // captures the command line options
-  wxString option;
-  if (parser.Found("units", &option) == true) {
-    if (option == "imperial") {
+  wxString option_str;
+  double option_num;
+  if (parser.Found("strain", &option_num) == true) {
+    strain_percent_polynomial_limits_ = option_num;
+  } else if (parser.Found("units", &option_str) == true) {
+    if (option_str == "imperial") {
       units_ = units::UnitSystem::kImperial;
-    } else if (option == "metric") {
+    } else if (option_str == "metric") {
       units_ = units::UnitSystem::kMetric;
     } else {
       wxLogError("Invalid units option. Exiting.");
       return false;
     }
-  } else {
-    units_ = units::UnitSystem::kImperial;
   }
 
   // captures the command line parameters
@@ -75,6 +76,8 @@ bool CableFileConverterApp::OnInit() {
   // initializes variables
   filepath_input_ = "";
   filepath_output_ = "";
+  strain_percent_polynomial_limits_ = -1;
+  units_ = units::UnitSystem::kImperial;
 
   // redirects log to a file in the executable directory
   wxFileName filepath(wxStandardPaths::Get().GetExecutablePath());
@@ -155,7 +158,8 @@ int CableFileConverterApp::OnRun() {
 
   // searches for the polynomial limits
   wxLogVerbose("Solving for polynomial limits.");
-  if (CablePolynomialSearcher::SolveLimits(cable) == false) {
+  if (CablePolynomialSearcher::SolveLimits(strain_percent_polynomial_limits_,
+                                           cable) == false) {
     wxLogError("Limit searching errors were encountered. Exiting.");
     return 0;
   }

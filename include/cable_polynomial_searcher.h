@@ -11,6 +11,16 @@
 /// \par OVERVIEW
 ///
 /// This class searches a polynomial segment.
+///
+/// \par POLYNOMIAL LIMITS
+///
+/// The polynomials that describe cable elongation can become erratic at certain
+/// strain values. To guard against this, polynomial limits are used to restrict
+/// the usable range of the polynomial. Cable polynomials usually need the
+/// slope to stay within a specific tolerance. If the slope is negative or too
+/// low, the polynomial won't reflect a significant change to stress. If the
+/// slope is too high, it will exceed the elastic modulus, which causes
+/// unrealistic behavior once the cable is unloaded.
 class CablePolynomialSearcher {
  public:
   /// \brief Default constructor.
@@ -20,10 +30,14 @@ class CablePolynomialSearcher {
   ~CablePolynomialSearcher();
 
   /// \brief Solves the cable polynomial limits.
+  /// \param[in] strain_percent
+  ///   The percent strain to solve the polynomial limits at. If this is set to
+  ///   -1 the strain will be set to the maximum safe value between 0.0 and 1.0
+  ///   percent strain.
   /// \param[in,out] cable
   ///   The cable.
   /// \return The success status.
-  static bool SolveLimits(Cable& cable);
+  static bool SolveLimits(const double& strain_percent, Cable& cable);
 
  private:
   /// \brief Finds the limit point of the cable polynomial segment.

@@ -51,6 +51,10 @@ class CableFileConverterApp : public wxAppConsole {
   ///   The output filepath. This is specified as a command line parameter.
   wxString filepath_output_;
 
+  /// \var strain_percent_polynomial_limits_
+  ///   The percent strain value for the polynomial limits.
+  double strain_percent_polynomial_limits_;
+
   /// \var units_
   ///   The unit system.
   units::UnitSystem units_;
@@ -62,6 +66,8 @@ static const wxCmdLineEntryDesc cmd_line_desc [] = {
       wxCMD_LINE_VAL_NONE, wxCMD_LINE_OPTION_HELP},
   {wxCMD_LINE_SWITCH, "v", "verbose", "enable verbose logging"},
 
+  {wxCMD_LINE_OPTION, "s", "strain", "percent strain for polynomial limits",
+      wxCMD_LINE_VAL_DOUBLE, wxCMD_LINE_PARAM_OPTIONAL},
   {wxCMD_LINE_OPTION, "u", "units", "unit system for generated file - "
                                     "'imperial' (default) or 'metric'",
       wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL},

@@ -15,10 +15,10 @@ CablePolynomialSearcher::CablePolynomialSearcher() {
 CablePolynomialSearcher::~CablePolynomialSearcher() {
 }
 
-/// This method solves the limits of each cable component polynomial. It calls
-/// each polynomial to be searched. The native polynomial units are used for
-/// searching (% strain, virtual stress).
-bool CablePolynomialSearcher::SolveLimits(Cable& cable) {
+/// This method solves the limits of each cable component polynomial.The native
+/// polynomial units are used for searching (% strain, virtual stress).
+bool CablePolynomialSearcher::SolveLimits(const double& strain_percent,
+                                          Cable& cable) {
   // creates a sag-tension cable to help determine which components are enabled
   SagTensionCable cable_sagtension;
   cable_sagtension.set_cable_base(&cable);
@@ -27,19 +27,26 @@ bool CablePolynomialSearcher::SolveLimits(Cable& cable) {
   Polynomial polynomial;
   Point2d<double> limit;
   wxString message;
+  double slope_min = 999999;
+  double slope_max = -999999;
 
   // solves the core component limits
   if (cable_sagtension.IsEnabled(SagTensionCable::ComponentType::kCore)) {
-    // initializes core slope limits
-    const double slope_min = 1000;
-    const double slope_max_core =
-        cable.component_core.modulus_tension_elastic_area / 100;
+    // initializes slope limits
+    slope_min = 1000;
+    slope_max = cable.component_core.modulus_tension_elastic_area / 100;
 
     // solves for creep polynomial
     polynomial.set_coefficients(
         &cable.component_core.coefficients_polynomial_creep);
 
-    limit = PointLimit(polynomial, "core creep", slope_min, slope_max_core);
+    if (strain_percent == -1) {
+      limit = PointLimit(polynomial, "core creep", slope_min, slope_max);
+    } else {
+      limit.x = strain_percent;
+      limit.y = polynomial.Y(strain_percent);
+    }
+
     cable.component_core.load_limit_polynomial_creep =
         helper::Round(limit.y, 1);
 
@@ -47,8 +54,14 @@ bool CablePolynomialSearcher::SolveLimits(Cable& cable) {
     polynomial.set_coefficients(
         &cable.component_core.coefficients_polynomial_loadstrain);
 
-    limit = PointLimit(polynomial, "core stress-strain", slope_min,
-                       slope_max_core);
+    if (strain_percent == -1) {
+      limit = PointLimit(polynomial, "core stress-strain",
+                         slope_min, slope_max);
+    } else {
+      limit.x = strain_percent;
+      limit.y = polynomial.Y(strain_percent);
+    }
+
     cable.component_core.load_limit_polynomial_loadstrain =
         helper::Round(limit.y, 1);
   } else {
@@ -60,15 +73,21 @@ bool CablePolynomialSearcher::SolveLimits(Cable& cable) {
 
   // solves the shell component limits
   if (cable_sagtension.IsEnabled(SagTensionCable::ComponentType::kShell)) {
-    // initializes shell slope limits
-    const double slope_min = 1000;
-    const double slope_max_shell =
-        cable.component_shell.modulus_tension_elastic_area / 100;
+    // initializes slope limits
+    slope_min = 1000;
+    slope_max = cable.component_shell.modulus_tension_elastic_area / 100;
+
     // solves for creep polynomial
     polynomial.set_coefficients(
         &cable.component_shell.coefficients_polynomial_creep);
 
-    limit = PointLimit(polynomial, "shell creep", slope_min, slope_max_shell);
+    if (strain_percent == -1) {
+      limit = PointLimit(polynomial, "shell creep", slope_min, slope_max);
+    } else {
+      limit.x = strain_percent;
+      limit.y = polynomial.Y(strain_percent);
+    }
+
     cable.component_shell.load_limit_polynomial_creep =
         helper::Round(limit.y, 1);
 
@@ -76,8 +95,14 @@ bool CablePolynomialSearcher::SolveLimits(Cable& cable) {
     polynomial.set_coefficients(
         &cable.component_shell.coefficients_polynomial_loadstrain);
 
-    limit = PointLimit(polynomial, "shell stress-strain", slope_min,
-                       slope_max_shell);
+    if (strain_percent == -1) {
+      limit = PointLimit(polynomial, "shell stress-strain",
+                         slope_min, slope_max);
+    } else {
+      limit.x = strain_percent;
+      limit.y = polynomial.Y(strain_percent);
+    }
+
     cable.component_shell.load_limit_polynomial_loadstrain =
         helper::Round(limit.y, 1);
   } else {
