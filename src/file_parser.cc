@@ -57,11 +57,14 @@ std::list<wxString> FileParser::SubStrings(const wxString& str,
   // searches string for separators and creates substrings
   // adds to list
   int pos_before = 0;
-  int pos = str.Find(separator);
+  int pos = str.find(separator, pos_before);
   while (pos != -1) {
     int len = pos - pos_before;
+
     wxString sub_str = str.substr(pos_before, len);
-    sub_strs.push_back(sub_str);
+    if (sub_str.empty() == false) {
+      sub_strs.push_back(sub_str);
+    }
 
     pos_before = pos + 1;
     pos = str.find(separator, pos_before);
@@ -69,7 +72,9 @@ std::list<wxString> FileParser::SubStrings(const wxString& str,
 
   // adds last string to list
   wxString sub_str = str.substr(pos_before);
-  sub_strs.push_back(sub_str);
+  if (sub_str.empty() == false) {
+    sub_strs.push_back(sub_str);
+  }
 
   return sub_strs;
 }
