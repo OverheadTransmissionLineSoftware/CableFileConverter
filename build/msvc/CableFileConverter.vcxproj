@@ -91,6 +91,7 @@
     <ClInclude Include="..\..\external\AppCommon\include\appcommon\xml\cable_xml_handler.h" />
     <ClInclude Include="..\..\external\AppCommon\include\appcommon\xml\xml_handler.h" />
     <ClInclude Include="..\..\include\cable_file_converter_app.h" />
+    <ClInclude Include="..\..\include\cable_file_xml_handler.h" />
     <ClInclude Include="..\..\include\cable_polynomial_searcher.h" />
     <ClInclude Include="..\..\include\file_parser.h" />
   </ItemGroup>
@@ -99,6 +100,7 @@
     <ClCompile Include="..\..\external\AppCommon\src\xml\cable_xml_handler.cc" />
     <ClCompile Include="..\..\external\AppCommon\src\xml\xml_handler.cc" />
     <ClCompile Include="..\..\src\cable_file_converter_app.cc" />
+    <ClCompile Include="..\..\src\cable_file_xml_handler.cc" />
     <ClCompile Include="..\..\src\cable_polynomial_searcher.cc" />
     <ClCompile Include="..\..\src\file_parser.cc" />
   </ItemGroup>

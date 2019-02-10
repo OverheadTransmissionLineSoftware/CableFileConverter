@@ -35,6 +35,9 @@
     <ClInclude Include="..\..\include\file_parser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\cable_file_xml_handler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\external\AppCommon\src\xml\cable_xml_handler.cc">
@@ -53,6 +56,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\file_parser.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\cable_file_xml_handler.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

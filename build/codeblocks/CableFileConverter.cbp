@@ -74,6 +74,9 @@
 		<Unit filename="../../include/cable_file_converter_app.h">
 			<Option virtualFolder="Header Files/" />
 		</Unit>
+		<Unit filename="../../include/cable_file_xml_handler.h">
+			<Option virtualFolder="Header Files/" />
+		</Unit>
 		<Unit filename="../../include/cable_polynomial_searcher.h">
 			<Option virtualFolder="Header Files/" />
 		</Unit>
@@ -81,6 +84,9 @@
 			<Option virtualFolder="Header Files/" />
 		</Unit>
 		<Unit filename="../../src/cable_file_converter_app.cc">
+			<Option virtualFolder="Source Files/" />
+		</Unit>
+		<Unit filename="../../src/cable_file_xml_handler.cc">
 			<Option virtualFolder="Source Files/" />
 		</Unit>
 		<Unit filename="../../src/cable_polynomial_searcher.cc">

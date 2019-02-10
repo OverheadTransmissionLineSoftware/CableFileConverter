@@ -4,11 +4,11 @@
 #include "cable_file_converter_app.h"
 
 #include "appcommon/units/cable_unit_converter.h"
-#include "appcommon/xml/cable_xml_handler.h"
 #include "wx/filename.h"
 #include "wx/stdpaths.h"
 #include "wx/xml/xml.h"
 
+#include "cable_file_xml_handler.h"
 #include "cable_polynomial_searcher.h"
 
 /// \brief Parses a cable file.
@@ -160,10 +160,11 @@ int CableFileConverterApp::OnRun() {
   CableUnitConverter::ConvertUnitStyleToDifferent(units, true, cable);
 
   // generates output file
+  // the file version is set to 0, as this has to be defined uniquely by the
+  // app that uses it
   wxLogVerbose("Saving output file: " + filepath_output_);
-  wxXmlNode* root = CableXmlHandler::CreateNode(cable, "",
-                                                units::UnitSystem::kImperial);
-  root->AddAttribute("units", "Imperial");
+  wxXmlNode* root = CableFileXmlHandler::CreateNode(
+      cable, "", units::UnitSystem::kImperial, units::UnitStyle::kDifferent);
 
   wxXmlDocument doc;
   doc.SetRoot(root);
