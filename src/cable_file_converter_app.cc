@@ -133,27 +133,19 @@ int CableFileConverterApp::OnRun() {
 
   // initializes data to be filled when parsing occurs
   Cable cable;
-  units::UnitSystem units;
+  units::UnitSystem units = units::UnitSystem::kNull;
 
   // parses input file
+  // the cable should be in 'consistent' units after parsing is finished
   wxLogVerbose("Parsing input file: " + filepath_input_);
   if (ParseCableFile(filepath_input_, units, cable) == false) {
     wxLogError("Parsing errors were encountered. Exiting.");
     return 0;
   }
 
-  // converts units if necessary
+  // converts from file to app unit system if necessary
   if (units_ != units) {
-    // converts from different to consistent unit style
-    CableUnitConverter::ConvertUnitStyle(units, units::UnitStyle::kDifferent,
-                                         units::UnitStyle::kConsistent, cable);
-
-    // converts from file to app unit system
-    CableUnitConverter::ConvertUnitSystem(units, units_, cable);
-
-    // converts from consistent to different unit style
-    CableUnitConverter::ConvertUnitStyle(units, units::UnitStyle::kConsistent,
-                                         units::UnitStyle::kDifferent, cable);
+    CableUnitConverter::ConvertUnitSystem(units, units_, true, cable);
   }
 
   // searches for the polynomial limits
@@ -163,6 +155,9 @@ int CableFileConverterApp::OnRun() {
     wxLogError("Limit searching errors were encountered. Exiting.");
     return 0;
   }
+
+  // converts to 'different' unit style
+  CableUnitConverter::ConvertUnitStyleToDifferent(units, true, cable);
 
   // generates output file
   wxLogVerbose("Saving output file: " + filepath_output_);
