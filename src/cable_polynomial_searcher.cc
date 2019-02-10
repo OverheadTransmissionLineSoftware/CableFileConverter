@@ -152,8 +152,8 @@ Point2d<double> CablePolynomialSearcher::PointLimit(
   // logs result
   wxString message;
   message = name_polynomial + " limit = ("
-            + helper::DoubleToFormattedString(limit.x, 3) + ", "
-            + helper::DoubleToFormattedString(limit.y, 1) + ")";
+            + helper::DoubleToString(limit.x, 5, true) + ", "
+            + helper::DoubleToString(limit.y, 1, true) + ")";
   wxLogVerbose(message);
 
   return limit;
